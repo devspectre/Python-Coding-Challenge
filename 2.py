@@ -5,7 +5,7 @@ sample_input = "11:22:33:44:55:66 aaa\na6:ae:2f:9d:31:b4\nbbb\n"
 
 pattern = '([a-f0-9]{2}[:]{1}){5}([a-f0-9]{2}){1}'
 
-def validate_lines(string: str) -> list:
+def find_first_valid_mac_addr(string: str) -> str:
 	result = []
 	lines = string.split('\n')
 	for line in lines:
@@ -13,10 +13,9 @@ def validate_lines(string: str) -> list:
 		if match:
 			for y in match:
 				found = line[y.start():y.end()]
-				if found == line.strip():
-					result.append(line)
+				if y.start() == 0 and y.end() == len(line):
+					return line
 
+	return ''
 
-	return result
-
-sys.stdout.write(validate_lines(sample_input))
+sys.stdout.write(find_first_valid_mac_addr(sample_input))
